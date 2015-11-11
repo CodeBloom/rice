@@ -33,6 +33,7 @@ import org.kuali.rice.core.web.util.PropertySources;
 import org.kuali.rice.kew.api.KewApiConstants;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.Log4jConfigurer;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import com.google.common.base.Optional;
@@ -110,6 +111,7 @@ public class KualiInitializeListener implements ServletContextListener {
         }
 
         context.start();
+        sce.getServletContext().setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, context);
         long endInit = System.currentTimeMillis();
         LOG.info("...Kuali Rice Application successfully initialized, startup took " + (endInit - startInit) + " ms.");
     }
