@@ -91,7 +91,7 @@ public class TestClient1 extends BaseTestServer {
 
         ssl_connector.setPort(configConstants.SERVER_HTTPS_PORT);
         SslContextFactory cf = ssl_connector.getSslContextFactory();
-        cf.setKeyStore(configConstants.KEYSTORE_PATH);
+        cf.setKeyStorePath(configConstants.KEYSTORE_PATH);
         cf.setKeyStorePassword(configConstants.KEYSTORE_PASS);
         cf.setKeyManagerPassword(configConstants.KEYSTORE_PASS);
 
