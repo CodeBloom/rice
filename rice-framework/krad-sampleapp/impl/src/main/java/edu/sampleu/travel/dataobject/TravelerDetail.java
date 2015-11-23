@@ -15,10 +15,22 @@
  */
 package edu.sampleu.travel.dataobject;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
 import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.core.api.mo.common.active.MutableInactivatable;
 import org.kuali.rice.kim.api.identity.Person;
 import org.kuali.rice.krad.bo.DataObjectBase;
+import org.kuali.rice.krad.data.jpa.PortableSequenceGenerator;
 import org.kuali.rice.krad.data.provider.annotation.InheritProperties;
 import org.kuali.rice.krad.data.provider.annotation.InheritProperty;
 import org.kuali.rice.krad.data.provider.annotation.Label;
@@ -26,27 +38,17 @@ import org.kuali.rice.krad.data.provider.annotation.Relationship;
 import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
 import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import java.util.Date;
-
 
 @Entity
 @Table(name="TRVL_TRAVELER_DTL_T")
 @UifAutoCreateViews({UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP})
 public class TravelerDetail extends DataObjectBase implements MutableInactivatable {
-	private static final long serialVersionUID = -7169083136626617130L;
 
+	private static final long serialVersionUID = -7169083136626617130L;
+	
     @Id
     @GeneratedValue(generator = "TRVL_TRAVELER_DTL_ID_S")
-    @SequenceGenerator(name = "TRVL_TRAVELER_DTL_ID_S", sequenceName = "TRVL_TRAVELER_DTL_ID_S", allocationSize = 5)
+    @PortableSequenceGenerator(name = "TRVL_TRAVELER_DTL_ID_S")
     @Column(name = "id", length = 40, nullable = false)
 	protected String id;
     @Column(name = "doc_nbr", length=14)
