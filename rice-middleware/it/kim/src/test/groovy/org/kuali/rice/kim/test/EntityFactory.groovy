@@ -15,6 +15,10 @@
  */
 package org.kuali.rice.kim.test
 
+import java.sql.Timestamp
+
+import org.joda.time.DateTime
+import org.joda.time.LocalDate;
 import org.kuali.rice.kim.api.KimConstants
 import org.kuali.rice.kim.impl.identity.address.EntityAddressBo
 import org.kuali.rice.kim.impl.identity.address.EntityAddressTypeBo
@@ -41,10 +45,6 @@ import org.kuali.rice.kim.impl.identity.privacy.EntityPrivacyPreferencesBo
 import org.kuali.rice.kim.impl.identity.residency.EntityResidencyBo
 import org.kuali.rice.kim.impl.identity.type.EntityTypeContactInfoBo
 import org.kuali.rice.kim.impl.identity.visa.EntityVisaBo
-import org.kuali.rice.kim.impl.identity.employment.EntityEmploymentTypeBo
-import org.kuali.rice.kim.impl.identity.employment.EntityEmploymentStatusBo
-import org.joda.time.DateTime
-import java.sql.Timestamp
 
 /**
  * Factory for constructing Entity- objects
@@ -56,12 +56,11 @@ class EntityFactory extends Factory {
     }
 
     def EntityBioDemographicsBo(Map fields) {
-        def now = new java.sql.Date(new Date().time)
         def values = [
-            birthDateValue: new java.sql.Date(genDbTimestamp().time),
+            birthDateValue: genDbDate(),
             genderCode: "M",
             genderChangeCode: "...",
-            deceasedDateValue: new java.sql.Date((long) (genDbTimestamp().time + (1000L * 60 * 60 * 24 * 365 * 80))),
+			deceasedDateValue: genDbDate(365 * 80),
             maritalStatusCode: "S",
             primaryLanguageCode: "EN",
             secondaryLanguageCode: "FR",
@@ -190,10 +189,14 @@ class EntityFactory extends Factory {
         new EntityBo(fields)
     }
 
-    protected def genDbTimestamp() {
+    protected Timestamp genDbTimestamp(int daysFromNow = 0) {
         // this should not be rocket science but we have to deal
         // but it appears mysql (driver?) is truncating time component of datetimes
         // so we can only portably test timestamps without times...
-        new Timestamp(new Date().clearTime().time)
+        new Timestamp(DateTime.now().plusDays(daysFromNow).withTimeAtStartOfDay().getMillis());
     }
+	
+	protected Date genDbDate(int daysFromNow = 0) {
+		new java.sql.Date(DateTime.now().plusDays(daysFromNow).withTimeAtStartOfDay().getMillis());
+	}
 }

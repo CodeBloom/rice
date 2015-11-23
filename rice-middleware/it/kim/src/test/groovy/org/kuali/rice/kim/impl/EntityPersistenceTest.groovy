@@ -31,7 +31,7 @@ class EntityPersistenceTest extends BoPersistenceTest {
     @Test
     void test_save_entity() {
         EntityBo entity = Factory.make(EntityBo)
-        boService.save(entity, PersistenceOption.FLUSH)
+        entity = boService.save(entity, PersistenceOption.FLUSH)
 
         // assert entity row
         assertRow(standard_fields(entity) + [ ENTITY_ID: entity.id ], "KRIM_ENTITY_T", "ENTITY_ID")
