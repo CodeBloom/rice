@@ -16,6 +16,7 @@
 package org.kuali.rice.krad.data.provider.impl;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +72,7 @@ public class CompositeMetadataProviderImpl extends MetadataProviderBase implemen
 				// from the keys of the map
 				Map<Class<?>, DataObjectMetadata> metadata = null;
 				if (provider.requiresListOfExistingTypes()) {
-					metadata = provider.provideMetadataForTypes(masterMetadataMap.keySet());
+					metadata = provider.provideMetadataForTypes(Collections.list(masterMetadataMap.keys()));
 				} else {
 					metadata = provider.provideMetadata();
 				}
